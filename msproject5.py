@@ -1,3 +1,4 @@
+#! /usr/bin/env python3
 from random import shuffle
 ranks = ['Ace', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten', 'Jack', 'Queen', 'King']
 suits = ['Clubs', 'Diamonds', 'Hearts', 'Spades']
