@@ -5,7 +5,10 @@ suits = ['Clubs', 'Diamonds', 'Hearts', 'Spades']
 value = {'Ace': [1, 11], 'Two': 2, 'Three': 3, 'Four': 4, 'Five': 5, 'Six': 6, 'Seven': 7, 'Eight': 8, 'Nine': 9, 'Ten': 10, 'Jack': 10, 'Queen': 10, 'King': 10}
 
 
+<<<<<<< HEAD
 # Show cards and its values
+=======
+>>>>>>> b165830... Revert "Add comment about what show_cards function does and removed default argument"
 def show_cards(list_cards, name, dealer_list_cards = ''):
     if name == 'player':
         for card in dealer_list_cards:
