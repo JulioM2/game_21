@@ -1,12 +1,12 @@
-#! /usr/bin/env python3
+#! /usr/bin/env python
 from random import shuffle
 ranks = ['Ace', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten', 'Jack', 'Queen', 'King']
 suits = ['Clubs', 'Diamonds', 'Hearts', 'Spades']
 value = {'Ace': [1, 11], 'Two': 2, 'Three': 3, 'Four': 4, 'Five': 5, 'Six': 6, 'Seven': 7, 'Eight': 8, 'Nine': 9, 'Ten': 10, 'Jack': 10, 'Queen': 10, 'King': 10}
 
 
-# Show cards and its value from player and dealer in the screen
-def show_cards(list_cards, name, dealer_list_cards):
+# Show cards and its values
+def show_cards(list_cards, name, dealer_list_cards = ''):
     if name == 'player':
         for card in dealer_list_cards:
             if type(card.value) == type([]):
@@ -162,28 +162,22 @@ class Dealer:
         elif operation == 'increase':
             self.amount += value1
 
-
+# Class to perform all player tasks
 class Player:
+    # Set name and original value
     def __init__(self, name):
         self.name = name
         self.money = 6000
-    def bet(self):
-        while True:
-            print(f'Available cash: {self.money}')
-            if self.money == 0:
-                print('You out of money!')
-                return 0
-            value = int(input('Bet value: '))
-            if value > self.money:
-                print(f"You don't have this value to bet! Your current cash is {self.money}")
-                print('Choose a smaller value')
-            if value <= self.money:
-                self.money -= value
-                break
-        return value
+    # Updates money available after each bet
+    def bet(self, value):    
+        self.money -= value
+        if self.money < 0:
+            self.money = 0
+    # Update money in case of win
     def receive_money(self, value):
         print(f'+  {value}')
         self.money += value
+    # Return name and available money
     def __str__(self):
         return f'Player {self.name} has {self.money} available'
 
@@ -196,15 +190,23 @@ while True:
     dealer.shuffle_cards()
     while True:
         final_value = 0
-        bet_amount = player.bet()
-        if bet_amount < 500:
-            print('You dont have enough money to keep playing!')
+        # Get player bet if it is a valid int number and it's within the available amount
+        while True:
+            try:
+                bet_amount = int(input(f'{player} | Bet value: '))
+            except:
+                print('Enter a valid number')
+                continue
+            if bet_amount > player.money:
+                print('You don\'t have anough money for this bet')
+                continue
+            player.bet(bet_amount)
             break
         dealer_cards = []
         player_cards = []
         player_value1 = 0
         player_value2 = 0
-        # repetição para dar as cartas
+        # Repetição para dar as cartas
         for turn in range(2):
             player_cards.append(dealer.give_cards())
             dealer_cards.append(dealer.give_cards())
