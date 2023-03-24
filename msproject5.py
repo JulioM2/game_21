@@ -2,7 +2,7 @@
 from random import shuffle
 ranks = ['Ace', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten', 'Jack', 'Queen', 'King']
 suits = ['Clubs', 'Diamonds', 'Hearts', 'Spades']
-value = {'Ace': [1, 11], 'Two': 2, 'Three': 3, 'Four': 4, 'Five': 5, 'Six': 6, 'Seven': 7, 'Eight': 8, 'Nine': 9, 'Ten': 10, 'Jack': 10, 'Queen': 10, 'King': 10}
+value = {'Ace': 1, 'Two': 2, 'Three': 3, 'Four': 4, 'Five': 5, 'Six': 6, 'Seven': 7, 'Eight': 8, 'Nine': 9, 'Ten': 10, 'Jack': 10, 'Queen': 10, 'King': 10}
 
 
 <<<<<<< HEAD
@@ -12,10 +12,10 @@ value = {'Ace': [1, 11], 'Two': 2, 'Three': 3, 'Four': 4, 'Five': 5, 'Six': 6, '
 def show_cards(list_cards, name, dealer_list_cards = ''):
     if name == 'player':
         for card in dealer_list_cards:
-            if type(card.value) == type([]):
+            if card.rank == 'Ace':
                 print(card, end=', ')
                 print('???????????', end=' ')
-                print(card.value[0], 'or', card.value[1])
+                print(card.value, 'or', card.value + 10)
                 break
             else:
                 print(card, end=' ')
@@ -148,15 +148,20 @@ class Deck:
     def __str__(self):
         return f'There are {len(self.all_cards)} at the deck'
 
-
+# Class which all dealer's tasks
 class Dealer:
+    # Create a new deck and set the available amount of money
     def __init__(self):
         self.deck = Deck()
         self.amount = 1000000
+    # Remove current first card in deck and return it
     def give_cards(self):
         return self.deck.all_cards.pop(0)
+    # Shuffle the cards in the deck
     def shuffle_cards(self):
         shuffle(self.deck.all_cards)
+    # Update the money available, adding or subtracting, according to operation 
+    # And return the bet value plus itself in case of player's win
     def t_g_money(self, value1, operation):
         if operation == 'decrease':
             bet = value1 + value1
@@ -165,7 +170,7 @@ class Dealer:
         elif operation == 'increase':
             self.amount += value1
 
-# Class to perform all player tasks
+# Class which perform all player's tasks
 class Player:
     # Set name and original value
     def __init__(self, name):
@@ -209,7 +214,7 @@ while True:
         player_cards = []
         player_value1 = 0
         player_value2 = 0
-        # Repetição para dar as cartas
+        # Loop to give dealer's and player's cards
         for turn in range(2):
             player_cards.append(dealer.give_cards())
             dealer_cards.append(dealer.give_cards())
