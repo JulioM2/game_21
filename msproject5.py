@@ -5,47 +5,28 @@ suits = ['Clubs', 'Diamonds', 'Hearts', 'Spades']
 value = {'Ace': 1, 'Two': 2, 'Three': 3, 'Four': 4, 'Five': 5, 'Six': 6, 'Seven': 7, 'Eight': 8, 'Nine': 9, 'Ten': 10, 'Jack': 10, 'Queen': 10, 'King': 10}
 
 
-<<<<<<< HEAD
 # Show cards and its values
-=======
->>>>>>> b165830... Revert "Add comment about what show_cards function does and removed default argument"
-def show_cards(list_cards, name, dealer_list_cards = ''):
+def show_cards(list_cards, name, dealer_list_cards = []):
+    # Show dealer's card if it's player's cards being showed
     if name == 'player':
-        for card in dealer_list_cards:
-            if card.rank == 'Ace':
-                print(card, end=', ')
-                print('???????????', end=' ')
-                print(card.value, 'or', card.value + 10)
-                break
-            else:
-                print(card, end=' ')
-                print('???????????', end=' ')
-                print(card.value)
-                break
-    value2_validation = False
-    value1 = value2 = 0
-    for turn in list_cards:
-        if type(turn.value) == type([]) and value2_validation == False:
-            print(turn, end=', ')
-            value1 += turn.value[0]
-            value2 += turn.value[1]
-            value2_validation = True
-        elif type(turn.value) == type([]) and value2_validation == True:
-            print(turn)
-            value1 += turn.value[0]
-            value2 += turn.value[0]
+        print('Dealer\'s cards')
+        print(dealer_list_cards[0], end=', ')
+        print('???????????', end=' ')
+        # Show both possible values if the card is an ace
+        if dealer_list_cards[0].rank == 'Ace':
+            print(dealer_list_cards[0].value, 'or', dealer_list_cards[0].value + 10)
         else:
-            print(turn, end=', ')
-            value1 += turn.value
-            value2 += turn.value
-    if value2_validation == True:
-        print(value1, 'or', value2)
-        final_value = value2
-    else:
-        print(value1)
-        final_value = value1
-    if name == 'player':
-        return final_value
+            print(dealer_list_cards[0].value)
+    # Print whom cards are being showed
+    print(f'{name} cards')
+    # Show current cards and its values
+    for turn in list_cards:
+        print(turn, end=' ')
+        # Show both possible values if the card is an ace and go to next one
+        if turn.rank == 'Ace':
+            print(turn.value, 'or', turn.value + 10)
+            continue
+        print(turn.value)
 
 
 def values_verification(list_cards_values, name, fvalue = 0, compare_value = 0, b_amount = 0):
