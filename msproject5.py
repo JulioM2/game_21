@@ -6,29 +6,13 @@ value = {'Ace': 1, 'Two': 2, 'Three': 3, 'Four': 4, 'Five': 5, 'Six': 6, 'Seven'
 
 
 # Show cards and its values
-<<<<<<< HEAD
 # The first list can be player's or dealer's, second list will always be dealer's, if there's one
 def show_cards(list_cards, name, dealer_list_cards = []):
-    # If it's the player's time, show the first dealer's card and its value
-=======
-def show_cards(list_cards, name, dealer_list_cards = []):
-    # Show dealer's card if it's player's cards being showed
->>>>>>> c5189ea799de9a85e57ad51194e1b7c507b46d41
+    # Show the first dealer's card and its value if it's the player's time
     if name == 'player':
         print('Dealer\'s cards')
         print(dealer_list_cards[0], end=', ')
         print('???????????', end=' ')
-<<<<<<< HEAD
-        # If the card is an ace, show the two possible values
-        if dealer_list_cards[0].rank == 'Ace':
-            print(dealer_list_cards[0].value, 'or', dealer_list_cards[0].value + 10)
-        print(dealer_list_cards[0].value)
-    # Show show player's or dealer's card
-    print(f'{name} cards')
-    for turn in list_cards:
-        print(turn, end=', ')
-        # If the card is an ace, show the two possible values and continue to next card
-=======
         # Show both possible values if the card is an ace
         if dealer_list_cards[0].rank == 'Ace':
             print(dealer_list_cards[0].value, 'or', dealer_list_cards[0].value + 10)
@@ -40,7 +24,6 @@ def show_cards(list_cards, name, dealer_list_cards = []):
     for turn in list_cards:
         print(turn, end=' ')
         # Show both possible values if the card is an ace and go to next one
->>>>>>> c5189ea799de9a85e57ad51194e1b7c507b46d41
         if turn.rank == 'Ace':
             print(turn.value, 'or', turn.value + 10)
             continue
@@ -200,7 +183,6 @@ while True:
         # Get player bet if it is a valid int number and it's within the available amount
         while True:
             bet_amount = input(f'{player} | Bet value: | Q to quit ')[0].lower()
-            print(bet_amount)
             if bet_amount == 'q':
                 break
             try:
