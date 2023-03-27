@@ -210,6 +210,10 @@ while True:
             show_cards(dealer_cards, 'dealer')
             # values_verification(dealer_cards, 'dealer',final_value, final_value, bet_amount)
             break
-        play = input('Do you want to play again? Y or N ').upper()
-        if play == 'N':
+        # Break while loop if player don't have more money
+        if player.money == 0:
+            print('You don\'t have enough money to keep playing.')
+            break
+    play = input('Do you want to play again? Y or N ').upper()
+    if play == 'N':
             break
