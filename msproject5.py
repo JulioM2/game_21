@@ -175,7 +175,14 @@ class Player:
 while True:
     deck = Deck()
     dealer = Dealer()
-    name = str(input("What's your name? "))
+    # Get player's name
+    name = input("What's your name? ")
+    # Handle wrong input name and return to begin if name is invalid
+    try:
+        name = str(name)
+    except:
+        print('Choose a valid name (no numbers)')
+        continue
     player = Player(name)
     dealer.shuffle_cards()
     while True:
