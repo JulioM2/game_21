@@ -221,6 +221,7 @@ while True:
         if player.money == 0:
             print('You don\'t have enough money to keep playing.')
             break
-    play = input('Do you want to play again? Y or N ').upper()
+    # Select only the first letter of what was inserted in upper case
+    play = input('Do you want to play again? Y or N ')[0].upper()
     if play == 'N':
-            break
+                break
