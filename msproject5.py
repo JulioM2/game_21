@@ -29,87 +29,95 @@ def show_cards(list_cards, name, dealer_list_cards = []):
             continue
         print(turn.value)
 
-
-# def values_verification(list_cards_values, name, fvalue = 0, compare_value = 0, b_amount = 0):
-#     while True:
-#         if name == 'player':
-#             hit_or_stand = input('Hit or Stand? ').lower()
-#             if hit_or_stand == 'stand':
-#                 print('Total', fvalue)
-#                 return fvalue
-#             list_cards_values.append(dealer.give_cards())
-#             print(list_cards_values[-1], list_cards_values[-1].value)
-#         value1 = value2 = 0
-#         value2_validation = False
-#         for value in list_cards_values:
-#             if type(value.value) == type([]) and value2_validation == False:
-#                 value1 += value.value[0]
-#                 value2 += value.value[1]
-#                 value2_validation = True
-#             elif type(value.value) == type([]) and value2_validation == True:
-#                 value1 += value.value[0]
-#                 value2 += value.value[0]
-#             else:
-#                 value1 += value.value
-#                 value2 += value.value
-#         if name == 'player' and value2 < 21 and value2_validation == True:
-#             print(f'Total {value2}')
-#         elif name == 'player' and value2 > 21 or name == 'player' and value2_validation == False:
-#             print(f'Total {value1}')
-#         if value2 <= 21 and value2_validation == True:
-#             if name == 'player':
-#                 if value2 < 21:
-#                     print(value1, 'or', value2)
-#                     fvalue = value2
-#                 elif value2 == 21:
-#                     print(value2, 'BlackJack!')
-#                     fvalue = value2
-#                     break
-#             else:
-#                 if value2 < compare_value:
-#                     print(value2, 'hitting')
-#                     list_cards_values.append(dealer.give_cards())
-#                     print(list_cards_values[-1], list_cards_values[-1].value)
-#                 elif value2 > compare_value:
-#                     print('Dealer wins!', value2)
-#                     dealer.t_g_money(b_amount, 'increase')
-#                     break
-#                 elif value2 == compare_value:
-#                     print('Take money back')
-#                     player.receive_money(b_amount)
-#                     break
-#         else:
-#             if value1 > 21:
-#                 if name == 'dealer':
-#                     print(value1, f'Bust! Player {player.name} win!')
-#                     player.receive_money(dealer.t_g_money(bet_amount, 'decrease'))
-#                     break
-#                 else:
-#                     print(value1, 'Bust!')
-#                     fvalue = 0
-#                     break
-#             if name == 'player':
-#                 if value1 < 21:
-#                     fvalue = value1
-#                 elif value1 == 21:
-#                     print(value1, 'BlackJack!')
-#                     fvalue = value1
-#                     break
-#             else:
-#                 if value1 < compare_value:
-#                     print(value1,'hitting')
-#                     list_cards_values.append(dealer.give_cards())
-#                     print(list_cards_values[-1], list_cards_values[-1].value)
-#                 elif value1 > compare_value:
-#                     print('Dealer wins!', value1 )
-#                     dealer.t_g_money(b_amount, 'increase')
-#                     break
-#                 elif value1 == compare_value:
-#                     print('Take money back')
-#                     player.receive_money(b_amount)
-#                     break
-#     if name == 'player':
-#         return fvalue
+# Compare sumed cards values and show the winner
+def values_verification(list_cards_values, name, fvalue = 0, compare_value = 0, b_amount = 0):
+    while True:
+        if name == 'player':
+            # Infinite loop to handle input errors
+            while True:
+                hit_or_stand = input('Hit |1| or Stand |2|? ')
+                try:
+                    hit_or_stand = int(hit_or_stand)
+                    break
+                except:
+                    print('Wrong value, please enter |1| or |2|')
+            # If player choose to keep current value, return value
+            if hit_or_stand == 2:
+                print('Total', fvalue)
+                return fvalue
+            list_cards_values.append(dealer.give_cards())
+            print(list_cards_values[-1], list_cards_values[-1].value)
+        value1 = value2 = 0
+        value2_validation = False
+        for value in list_cards_values:
+            if type(value.value) == type([]) and value2_validation == False:
+                value1 += value.value[0]
+                value2 += value.value[1]
+                value2_validation = True
+            elif type(value.value) == type([]) and value2_validation == True:
+                value1 += value.value[0]
+                value2 += value.value[0]
+            else:
+                value1 += value.value
+                value2 += value.value
+        if name == 'player' and value2 < 21 and value2_validation == True:
+            print(f'Total {value2}')
+        elif name == 'player' and value2 > 21 or name == 'player' and value2_validation == False:
+            print(f'Total {value1}')
+        if value2 <= 21 and value2_validation == True:
+            if name == 'player':
+                if value2 < 21:
+                    print(value1, 'or', value2)
+                    fvalue = value2
+                elif value2 == 21:
+                    print(value2, 'BlackJack!')
+                    fvalue = value2
+                    break
+            else:
+                if value2 < compare_value:
+                    print(value2, 'hitting')
+                    list_cards_values.append(dealer.give_cards())
+                    print(list_cards_values[-1], list_cards_values[-1].value)
+                elif value2 > compare_value:
+                    print('Dealer wins!', value2)
+                    dealer.t_g_money(b_amount, 'increase')
+                    break
+                elif value2 == compare_value:
+                    print('Take money back')
+                    player.receive_money(b_amount)
+                    break
+        else:
+            if value1 > 21:
+                if name == 'dealer':
+                    print(value1, f'Bust! Player {player.name} win!')
+                    player.receive_money(dealer.t_g_money(bet_amount, 'decrease'))
+                    break
+                else:
+                    print(value1, 'Bust!')
+                    fvalue = 0
+                    break
+            if name == 'player':
+                if value1 < 21:
+                    fvalue = value1
+                elif value1 == 21:
+                    print(value1, 'BlackJack!')
+                    fvalue = value1
+                    break
+            else:
+                if value1 < compare_value:
+                    print(value1,'hitting')
+                    list_cards_values.append(dealer.give_cards())
+                    print(list_cards_values[-1], list_cards_values[-1].value)
+                elif value1 > compare_value:
+                    print('Dealer wins!', value1 )
+                    dealer.t_g_money(b_amount, 'increase')
+                    break
+                elif value1 == compare_value:
+                    print('Take money back')
+                    player.receive_money(b_amount)
+                    break
+    if name == 'player':
+        return fvalue
 
 
 class Card:
