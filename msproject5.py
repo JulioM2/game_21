@@ -176,13 +176,7 @@ while True:
     deck = Deck()
     dealer = Dealer()
     # Get player's name
-    name = input("What's your name? ")
-    # Handle wrong input name and return to begin if name is invalid
-    try:
-        name = str(name)
-    except:
-        print('Choose a valid name (no numbers)')
-        continue
+    name = str(input("What's your name? "))
     player = Player(name)
     dealer.shuffle_cards()
     while True:
@@ -221,7 +215,7 @@ while True:
         if player.money == 0:
             print('You don\'t have enough money to keep playing.')
             break
-    # Select only the first letter of what was inserted in upper case
+    # Select only the first character of what was inserted in upper case
     play = input('Do you want to play again? Y or N ')[0].upper()
     if play == 'N':
                 break
