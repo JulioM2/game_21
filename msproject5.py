@@ -30,7 +30,7 @@ def show_cards(list_cards, name, dealer_list_cards = []):
         print(turn.value)
 
 # Compare sumed cards values and show the winner
-def values_verification(list_cards_values, name, fvalue = 0, compare_value = 0, b_amount = 0):
+def values_verification(list_cards_values, name):
     while True:
         if name == 'player':
             # Infinite loop to handle input errors
@@ -199,26 +199,27 @@ while True:
             except:
                 print('Enter a valid number')
                 continue
+            # If player enter zero by accident, ask if want to keep playing
             if bet_amount == 0:
-                print('You don\'t have money to keep playing')
-                break
+                answer = input('Bet = 0. Still want to play? S or N')[0].lower()
+                if answer == 'n':
+                    break
+                continue
             if bet_amount > player.money:
                 print('You don\'t have anough money for this bet')
                 continue
             player.bet(bet_amount)
             break
-        dealer_cards = []
-        player_cards = []
-        # Loop to give dealer's and player's cards
-        for turn in range(2):
-            player_cards.append(dealer.give_cards())
-            dealer_cards.append(dealer.give_cards())
+        # Populate dealer's and player's lists/hands
+        dealer_cards, player_cards = [dealer.give_cards(), dealer.give_cards() for i in range(2)]
         while True:
             show_cards(player_cards,'player', dealer_cards)
             # final_value = values_verification(player_cards, 'player', final_value)
             show_cards(dealer_cards, 'dealer')
             # values_verification(dealer_cards, 'dealer',final_value, final_value, bet_amount)
-            break
+            # If conditional to verify who win will be add later
+            if True:
+                break
         # Break while loop if player don't have more money
         if player.money == 0:
             print('You don\'t have enough money to keep playing.')
