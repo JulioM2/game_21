@@ -41,83 +41,23 @@ def values_verification(list_cards_values, name):
                     break
                 except:
                     print('Wrong value, please enter |1| or |2|')
-            # If player choose to keep current value, return value
+            # If player choose to keep current value, print value and return it
             if hit_or_stand == 2:
-                print('Total', fvalue)
-                return fvalue
-            list_cards_values.append(dealer.give_cards())
-            print(list_cards_values[-1], list_cards_values[-1].value)
-        value1 = value2 = 0
-        value2_validation = False
-        for value in list_cards_values:
-            if type(value.value) == type([]) and value2_validation == False:
-                value1 += value.value[0]
-                value2 += value.value[1]
-                value2_validation = True
-            elif type(value.value) == type([]) and value2_validation == True:
-                value1 += value.value[0]
-                value2 += value.value[0]
-            else:
-                value1 += value.value
-                value2 += value.value
-        if name == 'player' and value2 < 21 and value2_validation == True:
-            print(f'Total {value2}')
-        elif name == 'player' and value2 > 21 or name == 'player' and value2_validation == False:
-            print(f'Total {value1}')
-        if value2 <= 21 and value2_validation == True:
-            if name == 'player':
-                if value2 < 21:
-                    print(value1, 'or', value2)
-                    fvalue = value2
-                elif value2 == 21:
-                    print(value2, 'BlackJack!')
-                    fvalue = value2
-                    break
-            else:
-                if value2 < compare_value:
-                    print(value2, 'hitting')
-                    list_cards_values.append(dealer.give_cards())
-                    print(list_cards_values[-1], list_cards_values[-1].value)
-                elif value2 > compare_value:
-                    print('Dealer wins!', value2)
-                    dealer.t_g_money(b_amount, 'increase')
-                    break
-                elif value2 == compare_value:
-                    print('Take money back')
-                    player.receive_money(b_amount)
-                    break
-        else:
-            if value1 > 21:
-                if name == 'dealer':
-                    print(value1, f'Bust! Player {player.name} win!')
-                    player.receive_money(dealer.t_g_money(bet_amount, 'decrease'))
-                    break
-                else:
-                    print(value1, 'Bust!')
-                    fvalue = 0
-                    break
-            if name == 'player':
-                if value1 < 21:
-                    fvalue = value1
-                elif value1 == 21:
-                    print(value1, 'BlackJack!')
-                    fvalue = value1
-                    break
-            else:
-                if value1 < compare_value:
-                    print(value1,'hitting')
-                    list_cards_values.append(dealer.give_cards())
-                    print(list_cards_values[-1], list_cards_values[-1].value)
-                elif value1 > compare_value:
-                    print('Dealer wins!', value1 )
-                    dealer.t_g_money(b_amount, 'increase')
-                    break
-                elif value1 == compare_value:
-                    print('Take money back')
-                    player.receive_money(b_amount)
-                    break
-    if name == 'player':
-        return fvalue
+                print('Total', sum(list_cards_values))
+                return sum(list_cards_values)
+        # Get a card, if player choose hit or if it's dealer's time
+        list_cards_values.append(dealer.give_cards())
+        # Print the new card and its value
+        print(list_cards_values[-1], list_cards_values[-1].value)
+        # Get the card's sum, print 'Total' and sum's value
+        cards_values_sum = sum(list_cards_values)
+        print('Total', cards_values_sum)
+        # If the sum is 21 or above, return the value
+        if cards_values_sum == 21 or cards_values_sum > 21:
+            return cards_values_sum
+    
+
+    
 
 
 class Card:
