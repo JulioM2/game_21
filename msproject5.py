@@ -29,35 +29,25 @@ def show_cards(list_cards, name, dealer_list_cards = []):
             continue
         print(turn.value)
 
-# Compare sumed cards values and show the winner
-def values_verification(list_cards_values, name):
-    while True:
-        if name == 'player':
-            # Infinite loop to handle input errors
-            while True:
-                hit_or_stand = input('Hit |1| or Stand |2|? ')
-                try:
-                    hit_or_stand = int(hit_or_stand)
-                    break
-                except:
-                    print('Wrong value, please enter |1| or |2|')
-            # If player choose to keep current value, print value and return it
-            if hit_or_stand == 2:
-                print('Total', sum(list_cards_values))
-                return sum(list_cards_values)
-        # Get a card, if player choose hit or if it's dealer's time
-        list_cards_values.append(dealer.give_cards())
-        # Print the new card and its value
-        print(list_cards_values[-1], list_cards_values[-1].value)
-        # Get the card's sum, print 'Total' and sum's value
-        cards_values_sum = sum(list_cards_values)
-        print('Total', cards_values_sum)
-        # If the sum is 21 or above, return the value
-        if cards_values_sum == 21 or cards_values_sum > 21:
-            return cards_values_sum
-    
 
-    
+# Compare sumed cards values and show the winner
+def values_verification(list_cards_values):    
+    list_cards_values.append(dealer.give_cards())
+    # Print the new card and its value
+    print(list_cards_values[-1], list_cards_values[-1].value)
+    # Card receive sum of cards
+    cards_values_sum = 0
+    # Variable show if an ace has already appeared
+    ace_presence = False
+    for card in list_cards_values:
+        # Add plus 10 to card value if it is an ace and is the first one
+        if card.rank == 'Ace' and ace_presence == False:
+            cards_values_sum += card.value + 10
+            ace_presence = True
+            continue
+        # Add normal card value
+        cards_values_sum =+ card.value
+    return cards_values_sum
 
 
 class Card:
@@ -77,6 +67,7 @@ class Deck:
                 self.all_cards.append(Card(rank, suit))
     def __str__(self):
         return f'There are {len(self.all_cards)} at the deck'
+
 
 # Class which all dealer's tasks
 class Dealer:
@@ -128,7 +119,6 @@ while True:
     player = Player(name)
     dealer.shuffle_cards()
     while True:
-        final_value = 0
         # Get player bet if it is a valid int number and it's within the available amount
         while True:
             bet_amount = input(f'{player} | Bet value: | Q to quit ')[0].lower()
@@ -152,14 +142,42 @@ while True:
             break
         # Populate dealer's and player's lists/hands
         dealer_cards, player_cards = [dealer.give_cards(), dealer.give_cards() for i in range(2)]
-        while True:
-            show_cards(player_cards,'player', dealer_cards)
-            # final_value = values_verification(player_cards, 'player', final_value)
-            show_cards(dealer_cards, 'dealer')
-            # values_verification(dealer_cards, 'dealer',final_value, final_value, bet_amount)
-            # If conditional to verify who win will be add later
-            if True:
-                break
+        show_cards(player_cards,'player', dealer_cards)
+        # Vefiry if player gets blackjack with the two first cards and player_value gets 21, if it is a blackjack
+        if player_cards[0].rank == 'Ace' or player_cards[1].rank == 'Ace' and sum(player_cards + 10) == 21:
+            player_value = 21
+        else:
+            while True:
+                while True:
+                    hit_or_stand = input('Hit |1| or Stand |2|? ')
+                    try:
+                        hit_or_stand = int(hit_or_stand)
+                        break
+                    except:
+                        print('Wrong value, please enter |1| or |2|')
+                # If player choose to keep current value, break loop
+                if hit_or_stand == 2:
+                    ace_presence == False
+                    # Variable to hold cards values if player wants to stand
+                    player_value = 0
+                    for card in player_cards:
+                        if card.rank == 'Ace' and ace_presence == False:
+                            player_value += card.value
+                            ace_presence = True
+                            continue
+                        player_value += card.value
+                    break
+                else:
+                    player_value = values_verification(player_cards)
+                    # If the sum is 21 or above, break
+                    if player_value >= 21:
+                        break
+        print('Total ', player_value)
+        show_cards(dealer_cards, 'dealer')
+        dealer_value = values_verification(dealer_cards)
+        # If conditional to verify who win will be add later
+        if True:
+            pass
         # Break while loop if player don't have more money
         if player.money == 0:
             print('You don\'t have enough money to keep playing.')
