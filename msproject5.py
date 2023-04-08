@@ -29,7 +29,7 @@ def show_cards(list_cards, name, dealer_list_cards = []):
             continue
         print(turn.value)
 
-# Sum cards values
+# Sum cards values and compare its values
 def sum_values(list_cards):
     # Variable to hold ace presence in list of cards
     ace_presence = False
@@ -41,15 +41,13 @@ def sum_values(list_cards):
             continue
         # Add normal card value
         cards_values_sum =+ card.value
+    # Verify if the sum with ace bigger value is greater than 21 and return the sum - 10 if it is
+    if ace_presence and cards_values_sum > 21:
+        return cards_values_sum - 10
     return cards_values_sum
     
-
-
-# Compare sumed cards values and show the winner
-def values_verification(list_cards_values):
-    # Verify if cards make a blacjack
-    if list_cards_values[0].rank == 'Ace' or list_cards_values[1].rank == 'Ace' and sum(list_cards_values + 10) == 21:
-        return 21
+# Add cards if hit is chosen
+def hitting(list_cards_values):
     list_cards_values.append(dealer.give_cards())
     # Print the new card and its value
     print(list_cards_values[-1], list_cards_values[-1].value)
@@ -75,7 +73,7 @@ class Deck:
         return f'There are {len(self.all_cards)} at the deck'
 
 
-# Class which all dealer's tasks
+# Class with all dealer's tasks
 class Dealer:
     # Create a new deck and set the available amount of money
     def __init__(self):
@@ -96,6 +94,7 @@ class Dealer:
             return bet
         elif operation == 'increase':
             self.amount += value1
+
 
 # Class which perform all player's tasks
 class Player:
@@ -135,7 +134,7 @@ while True:
             except:
                 print('Enter a valid number')
                 continue
-            # If player enter zero by accident, ask if want to keep playing
+            # If player enter zero by accident, ask if wants to keep playing
             if bet_amount == 0:
                 answer = input('Bet = 0. Still want to play? S or N')[0].lower()
                 if answer == 'n':
@@ -149,6 +148,9 @@ while True:
         # Populate dealer's and player's lists/hands
         dealer_cards, player_cards = [dealer.give_cards(), dealer.give_cards() for i in range(2)]
         show_cards(player_cards,'player', dealer_cards)
+        # Verify if cards's sum is a blacjack
+        if player_cards[0].rank == 'Ace' or player_cards[1].rank == 'Ace' and sum(player_cards + 10) == 21:
+            player_value = 21
         while True:
             while True:
                 hit_or_stand = input('Hit |1| or Stand |2|? ')
@@ -157,18 +159,25 @@ while True:
                     break
                 except:
                     print('Wrong value, please enter |1| or |2|')
-            # If player choose to keep current value, sum values and break loop
+            # If player choose to stand, sum values and break loop
             if hit_or_stand == 2:    
                 player_value = sum_values(player_cards)
                 break
-            else:
-                player_value = values_verification(player_cards)
-                # If the sum is 21 or above, break
-                if player_value >= 21:
-                    break
+            player_value = hitting(player_cards)
+            # If the sum is 21 or above, break
+            if player_value >= 21:
+                break
         print('Total ', player_value)
         show_cards(dealer_cards, 'dealer')
-        dealer_value = values_verification(dealer_cards)
+        # Verify if cards's sum is a blacjack
+        if dealer_cards[0].rank == 'Ace' or dealer_cards[1].rank == 'Ace' and sum(dealer_cards + 10) == 21:
+            dealer_value = 21
+        while True:
+            if dealer_value >= 17 or dealer_value > player_value:
+                break
+            dealer_value = hitting(dealer_cards)
+            if dealer_value >= 21:
+                break
         # If conditional to verify who win will be add later
         if True:
             pass
@@ -178,5 +187,5 @@ while True:
             break
     # Select only the first character of what was inserted in upper case
     play = input('Do you want to play again? Y or N ')[0].upper()
-    if play == 'N':
-                break
+    if play == 'N':        
+        break
