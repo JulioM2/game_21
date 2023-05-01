@@ -104,7 +104,7 @@ class Player:
     def __init__(self, name):
         self.name = name
         self.money = 6000
-    # Updates money available after each bet
+    # Update money available after each bet
     def bet(self, value):    
         self.money -= value
         if self.money < 0:
@@ -145,7 +145,6 @@ while True:
             print('You don\'t have anough money for this bet')
             continue
         player.bet(bet_amount)
-        break
         # Populate dealer's and player's lists/hands
         dealer_cards = [dealer.give_cards() for i in range(2)]
         player_cards = [dealer.give_cards() for i in range(2)]
@@ -174,11 +173,13 @@ while True:
         # Verify if cards's sum is a blacjack
         if dealer_cards[0].rank == 'Ace' or dealer_cards[1].rank == 'Ace' and sum(dealer_cards + 10) == 21:
             dealer_value = 21
+        # Variable to hold sum of dealer's cards values
+        dealer_value = sum(dealer_cards[0].value, dealer_cards[1].value)
         while True:
+            if dealer_value >= 17 or dealer_value > player_value:
+                break
             dealer_value = hitting(dealer_cards)
             if dealer_value >= 21:
-                break
-            if dealer_value >= 17 or dealer_value > player_value:
                 break
         # If conditional to verify who win will be add later
         if True:
