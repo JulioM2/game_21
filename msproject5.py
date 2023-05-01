@@ -33,6 +33,7 @@ def show_cards(list_cards, name, dealer_list_cards = []):
 def sum_values(list_cards):
     # Variable to hold ace presence in list of cards
     ace_presence = False
+    cards_values_sum = 0
     for card in list_cards:
         # Add plus 10 to card value if it is an ace and is the first one
         if card.rank == 'Ace' and ace_presence == False:
@@ -40,7 +41,7 @@ def sum_values(list_cards):
             ace_presence = True
             continue
         # Add normal card value
-        cards_values_sum =+ card.value
+        cards_values_sum += card.value
     # Verify if the sum with ace bigger value is greater than 21 and return the sum - 10 if it is
     if ace_presence and cards_values_sum > 21:
         return cards_values_sum - 10
@@ -51,6 +52,7 @@ def hitting(list_cards_values):
     list_cards_values.append(dealer.give_cards())
     # Print the new card and its value
     print(list_cards_values[-1], list_cards_values[-1].value)
+    print('Total', sum_values(list_cards_values))
     return sum_values(list_cards_values)
 
 
