@@ -127,26 +127,25 @@ while True:
     dealer.shuffle_cards()
     while True:
         # Get player bet if it is a valid int number and it's within the available amount
-        while True:
-            bet_amount = input(f'{player} | Bet value: | Q to quit ')[0].lower()
-            if bet_amount == 'q':
-                break
-            try:
-                bet_amount = int(bet_amount)
-            except:
-                print('Enter a valid number')
-                continue
-            # If player enter zero by accident, ask if wants to keep playing
-            if bet_amount == 0:
-                answer = input('Bet = 0. Still want to play? S or N')[0].lower()
-                if answer == 'n':
-                    break
-                continue
-            if bet_amount > player.money:
-                print('You don\'t have anough money for this bet')
-                continue
-            player.bet(bet_amount)
+        bet_amount = input(f'{player} | Bet value: | Q to quit ')[0].lower()
+        if bet_amount == 'q':
             break
+        try:
+            bet_amount = int(bet_amount)
+        except:
+            print('Enter a valid number')
+            continue
+        # If player enter zero by accident, ask if wants to keep playing
+        if bet_amount == 0:
+            answer = input('Bet = 0. Still want to play? S or N')[0].lower()
+            if answer == 'n':
+                break
+            continue
+        if bet_amount > player.money:
+            print('You don\'t have anough money for this bet')
+            continue
+        player.bet(bet_amount)
+        break
         # Populate dealer's and player's lists/hands
         dealer_cards = [dealer.give_cards() for i in range(2)]
         player_cards = [dealer.give_cards() for i in range(2)]
