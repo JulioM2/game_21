@@ -146,7 +146,8 @@ while True:
             player.bet(bet_amount)
             break
         # Populate dealer's and player's lists/hands
-        dealer_cards, player_cards = [dealer.give_cards(), dealer.give_cards() for i in range(2)]
+        dealer_cards = [dealer.give_cards() for i in range(2)]
+        player_cards = [dealer.give_cards() for i in range(2)]
         show_cards(player_cards,'player', dealer_cards)
         # Verify if cards's sum is a blacjack
         if player_cards[0].rank == 'Ace' or player_cards[1].rank == 'Ace' and sum(player_cards + 10) == 21:
@@ -173,10 +174,10 @@ while True:
         if dealer_cards[0].rank == 'Ace' or dealer_cards[1].rank == 'Ace' and sum(dealer_cards + 10) == 21:
             dealer_value = 21
         while True:
-            if dealer_value >= 17 or dealer_value > player_value:
-                break
             dealer_value = hitting(dealer_cards)
             if dealer_value >= 21:
+                break
+            if dealer_value >= 17 or dealer_value > player_value:
                 break
         # If conditional to verify who win will be add later
         if True:
