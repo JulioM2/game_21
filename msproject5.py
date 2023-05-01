@@ -153,16 +153,16 @@ while True:
         if player_cards[0].rank == 'Ace' or player_cards[1].rank == 'Ace' and sum(player_cards + 10) == 21:
             player_value = 21
         while True:
-            while True:
-                hit_or_stand = input('Hit |1| or Stand |2|? ')
-                try:
-                    hit_or_stand = int(hit_or_stand)
-                    break
-                except:
-                    print('Wrong value, please enter |1| or |2|')
+            hit_or_stand = input('Hit |1| or Stand |2|? ')
+            try:
+                hit_or_stand = int(hit_or_stand)
+            except:
+                print('Wrong value, please enter |1| or |2|')
+                continue
             # If player choose to stand, sum values and break loop
             if hit_or_stand == 2:    
                 player_value = sum_values(player_cards)
+                print('Total', player_value)
                 break
             player_value = hitting(player_cards)
             # If the sum is 21 or above, break
