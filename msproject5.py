@@ -168,16 +168,16 @@ while True:
             # If the sum is 21 or above, break
             if player_value >= 21:
                 break
-        print('Total ', player_value)
         show_cards(dealer_cards, 'dealer')
         # Verify if cards's sum is a blacjack
         if dealer_cards[0].rank == 'Ace' or dealer_cards[1].rank == 'Ace' and sum(dealer_cards + 10) == 21:
             dealer_value = 21
         else:
             # Variable to hold sum of dealer's cards values
-            dealer_value = sum(dealer_cards[0].value, dealer_cards[1].value)
+            dealer_value = sum([i.value for i in dealer_cards])
         while True:
             if dealer_value >= 17 or dealer_value > player_value:
+                print('Total', dealer_value)
                 break
             dealer_value = hitting(dealer_cards)
             if dealer_value >= 21:
