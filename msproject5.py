@@ -9,7 +9,7 @@ value = {'Ace': 1, 'Two': 2, 'Three': 3, 'Four': 4, 'Five': 5, 'Six': 6, 'Seven'
 # The first list can be player's or dealer's, second list will always be dealer's, if there's one
 def show_cards(list_cards, name, dealer_list_cards = []):
     # Show the first dealer's card and its value if it's the player's time
-    if name == 'player':
+    if name == 'Player':
         print('Dealer\'s cards')
         print(dealer_list_cards[0], end=', ')
         print('???????????', end=' ')
@@ -148,10 +148,12 @@ while True:
         # Populate dealer's and player's lists/hands
         dealer_cards = [dealer.give_cards() for i in range(2)]
         player_cards = [dealer.give_cards() for i in range(2)]
-        show_cards(player_cards,'player', dealer_cards)
+        show_cards(player_cards,'Player', dealer_cards)
         # Verify if cards's sum is a blacjack
-        if player_cards[0].rank == 'Ace' or player_cards[1].rank == 'Ace' and sum(player_cards + 10) == 21:
+        if player_cards[0].rank == 'Ace' and sum(player_cards + 10) == 21:
             player_value = 21
+        elif player_cards[1].rank == 'Ace' and sum(player_cards + 10) == 21:
+            player_value = 21   
         while True:
             hit_or_stand = input('Hit |1| or Stand |2|? ')
             try:
@@ -168,9 +170,11 @@ while True:
             # If the sum is 21 or above, break
             if player_value >= 21:
                 break
-        show_cards(dealer_cards, 'dealer')
+        show_cards(dealer_cards, 'Dealer')
         # Verify if cards's sum is a blacjack
-        if dealer_cards[0].rank == 'Ace' or dealer_cards[1].rank == 'Ace' and sum(dealer_cards + 10) == 21:
+        if dealer_cards[0].rank == 'Ace' and sum(dealer_cards + 10) == 21:
+            dealer_value = 21
+        elif dealer_cards[1].rank == 'Ace' and sum(dealer_cards + 10) == 21:
             dealer_value = 21
         else:
             # Variable to hold sum of dealer's cards values
