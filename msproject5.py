@@ -181,13 +181,12 @@ while True:
         else:
             # Variable to hold sum of dealer's cards values
             dealer_value = sum([i.value for i in dealer_cards])
-        if dealer_value >= 17 or player_value > 21:
-                print('Total', dealer_value)
-        else:
-            while True:
-                dealer_value = hitting(dealer_cards)
-                if dealer_value >= 17:
-                    break
+        while True:
+            if dealer_value >= 17 or player_value > 21:
+                print('Total', dealer_value)    
+            dealer_value = hitting(dealer_cards)
+            if dealer_value >= 17:
+                break
         # If conditional to verify who win will be add later
         if True:
             pass
