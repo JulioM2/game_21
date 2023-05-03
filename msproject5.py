@@ -153,42 +153,33 @@ while True:
         player_value = sum_values(player_cards)
         dealer_value = sum_values(dealer_cards)
         show_cards(player_cards,'Player', dealer_cards)
-        # Verify if cards's sum is a blacjack
-        if player_cards[0].rank == 'Ace' and player_value + 10 == 21:
-            player_value = 21
-        elif player_cards[1].rank == 'Ace' and player_value + 10 == 21:
-            player_value = 21   
-        while True:
-            hit_or_stand = input('Hit |1| or Stand |2|? ')
-            try:
-                hit_or_stand = int(hit_or_stand)
-            except:
-                print('Wrong value, please enter |1| or |2|')
-                continue
-            # If player choose to stand, sum values and break loop
-            if hit_or_stand == 2:    
-                print('Total', player_value)
-                break
-            player_value = hitting(player_cards)
-            # If the sum is 21 or above, break
-            if player_value >= 21:
-                break
+        # Verify if player's cards sum is a blackjack
+        if player_value < 21:   
+            while True:
+                hit_or_stand = input('Hit |1| or Stand |2|? ')
+                try:
+                    hit_or_stand = int(hit_or_stand)
+                except:
+                    print('Wrong value, please enter |1| or |2|')
+                    continue
+                # If player choose to stand, sum values and break loop
+                if hit_or_stand == 2:    
+                    print('Total', player_value)
+                    break
+                player_value = hitting(player_cards)
+                # If the sum is 21 or above, break
+                if player_value >= 21:
+                    break
         show_cards(dealer_cards, 'Dealer')
-        # Verify if cards's sum is a blacjack
-        if dealer_cards[0].rank == 'Ace' and dealer_value + 10 == 21:
-            dealer_value = 21
-        elif dealer_cards[1].rank == 'Ace' and dealer_value + 10 == 21:
-            dealer_value = 21
-        else:
-            # Variable to hold sum of dealer's cards values
-            dealer_value = sum([i.value for i in dealer_cards])
-        while True:
-            if dealer_value >= 17 or player_value > 21:
-                print('Total', dealer_value)
-                break
-            dealer_value = hitting(dealer_cards)
-            if dealer_value >= 17:
-                break
+        # Verify if dealer's cards sum is a blackjack
+        if dealer_value < 21:
+            while True:
+                if dealer_value >= 17 or player_value > 21:
+                    print('Total', dealer_value)
+                    break
+                dealer_value = hitting(dealer_cards)
+                if dealer_value >= 17:
+                    break
         # If conditional to verify who win will be add later
         if True:
             pass
