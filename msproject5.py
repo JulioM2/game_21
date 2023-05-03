@@ -186,7 +186,7 @@ while True:
         else:
             while True:
                 dealer_value = hitting(dealer_cards)
-                if dealer_value >= 21:
+                if dealer_value >= 17:
                     break
         # If conditional to verify who win will be add later
         if True:
