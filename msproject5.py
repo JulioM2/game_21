@@ -51,6 +51,7 @@ def sum_values(list_cards):
 def hitting(list_cards_values):
     list_cards_values.append(dealer.give_cards())
     # Print the new card and its value
+    print('Hitting')
     print(list_cards_values[-1], list_cards_values[-1].value)
     print('Total', sum_values(list_cards_values))
     return sum_values(list_cards_values)
