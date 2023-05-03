@@ -184,7 +184,8 @@ while True:
             dealer_value = sum([i.value for i in dealer_cards])
         while True:
             if dealer_value >= 17 or player_value > 21:
-                print('Total', dealer_value)    
+                print('Total', dealer_value)
+                break
             dealer_value = hitting(dealer_cards)
             if dealer_value >= 17:
                 break
