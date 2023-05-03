@@ -128,8 +128,8 @@ while True:
     dealer.shuffle_cards()
     while True:
         # Get player bet if it is a valid int number and it's within the available amount
-        bet_amount = input(f'{player} | Bet value: | Q to quit ')[0].lower()
-        if bet_amount == 'q':
+        bet_amount = input(f'{player} | Bet value: | Q to quit ').lower()
+        if bet_amount[0] == 'q':
             break
         try:
             bet_amount = int(bet_amount)
