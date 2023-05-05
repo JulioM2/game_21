@@ -91,11 +91,11 @@ class Dealer:
     # Update the money available, adding or subtracting, according to operation 
     # And return the bet value plus itself in case of player's win
     def t_g_money(self, value1, operation):
-        if operation == 'decrease':
+        if operation == 'give':
             bet = value1 + value1
             self.amount -= value1
             return bet
-        elif operation == 'increase':
+        else:
             self.amount += value1
 
 
@@ -170,6 +170,8 @@ while True:
                 # If the sum is 21 or above, break
                 if player_value >= 21:
                     break
+        else:
+            print('Blackjack!')
         show_cards(dealer_cards, 'Dealer')
         # Verify if dealer's cards sum is a blackjack
         if dealer_value < 21:
@@ -180,9 +182,25 @@ while True:
                 dealer_value = hitting(dealer_cards)
                 if dealer_value >= 17:
                     break
-        # If conditional to verify who win will be add later
-        if True:
-            pass
+        else:
+            print('Blackjack!')
+        # Check all the posibilities after getting cards values
+        if player_value > 21:
+            print('Player bust!')
+            dealer.t_g_money(bet_amount, 'take')
+        else:
+            if dealer_value > 21:
+                print('Dealer bust! Player win!')
+                player.receive_money(dealer.t_g_money(bet_amount, 'give'))
+            elif player_value > dealer_value:
+                print('Player win!')
+                player.receive_money(dealer.t_g_money(bet_amount, 'give'))
+            elif player_value == dealer_value:
+                print('Draw!')
+                player.receive_money(bet_amount)
+            else:
+                print('Dealer win!')
+                dealer.t_g_money(bet_amount, 'take')
         # Break while loop if player don't have more money
         if player.money == 0:
             print('You don\'t have enough money to keep playing.')
