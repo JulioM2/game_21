@@ -184,7 +184,7 @@ while True:
                     break
         else:
             print('Blackjack!')
-        # Check all the posibilities after getting cards values
+        # Check all the winning and losing posibilities after getting cards values
         if player_value > 21:
             print('Player bust!')
             dealer.t_g_money(bet_amount, 'take')
