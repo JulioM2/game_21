@@ -133,7 +133,7 @@ while True:
             break
         try:
             bet_amount = int(bet_amount)
-        except:
+        except ValueError:
             print('Enter a valid number')
             continue
         # If player enter zero by accident, ask if wants to keep playing
