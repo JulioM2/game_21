@@ -42,7 +42,7 @@ def sum_values(list_cards):
             continue
         # Add normal card value
         cards_values_sum += card.value
-    # Verify if the sum with ace bigger value is greater than 21 and return the sum - 10 if it is
+    # Verify if the sum with ace's bigger value is greater than 21 and return the sum - 10 if it is
     if ace_presence and cards_values_sum > 21:
         return cards_values_sum - 10
     return cards_values_sum
