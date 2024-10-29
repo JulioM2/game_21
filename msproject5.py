@@ -10,7 +10,7 @@ value = {'Ace': 1, 'Two': 2, 'Three': 3, 'Four': 4, 'Five': 5, 'Six': 6, 'Seven'
 def show_cards(list_cards, name, dealer_list_cards = []):
     # Show the first dealer's card and its value if it's the player's time
     if name == 'Player':
-        print('Dealer\'s cards')
+        print('----------Dealer\'s cards----------')
         print(dealer_list_cards[0], end=', ')
         print('???????????', end=' ')
         # Show both possible values if the card is an ace
@@ -19,7 +19,7 @@ def show_cards(list_cards, name, dealer_list_cards = []):
         else:
             print(dealer_list_cards[0].value)
     # Print whom cards are being showed
-    print(f'{name} cards')
+    print(f'----------{name} cards----------')
     # Show current cards and its values
     for turn in list_cards:
         print(turn, end=' ')
@@ -120,7 +120,6 @@ class Player:
 
 
 while True:
-    deck = Deck()
     dealer = Dealer()
     # Get player's name
     name = str(input("What's your name? "))
