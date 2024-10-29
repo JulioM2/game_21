@@ -47,7 +47,7 @@ def sum_values(list_cards):
         return cards_values_sum - 10
     return cards_values_sum
     
-# Add cards if hit is chosen
+# Add cards if hit was chosen
 def hitting(list_cards_values):
     list_cards_values.append(dealer.give_cards())
     # Print the new card and its value
@@ -158,7 +158,7 @@ while True:
                 hit_or_stand = input('Hit |1| or Stand |2|? ')
                 try:
                     hit_or_stand = int(hit_or_stand)
-                except:
+                except ValueError:
                     print('Wrong value, please enter |1| or |2|')
                     continue
                 # If player choose to stand, sum values and break loop
