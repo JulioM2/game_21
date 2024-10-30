@@ -127,14 +127,15 @@ while True:
     dealer.shuffle_cards()
     while True:
         # Get player bet if it is a valid int number and it's within the available amount
-        bet_amount = input(f'{player} | Bet value: | Q to quit ').upper()
-        if bet_amount[0] == 'Q':
-            break
-        try:
-            bet_amount = int(bet_amount)
-        except ValueError:
-            print('Enter a valid number')
-            continue
+        while True:
+            bet_amount = input(f'{player} | Bet value: | Q to quit ').upper()
+            if bet_amount[0] == 'Q':
+                break
+            try:
+                bet_amount = int(bet_amount)
+                break
+            except ValueError:
+                print('Enter a valid number')
         # If player enter zero by accident, ask if wants to keep playing
         if bet_amount == 0:
             answer = input('Bet = 0. Still want to play? S or N')[0].upper()
